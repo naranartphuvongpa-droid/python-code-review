@@ -19,7 +19,7 @@ def chamis_function(x):
     # In-plane modulus
     Ef22 = 84
     El22 = Em/(1 - (math.sqrt(Kf)*(1 - Em/Ef22)))
-    E2 = (1 - math.sqrt(Kf))*Em + math.sqrt(Kf)*El22
+    E2 = El22
 
     # V12 stays same
     V12 = Kf*Vf12 + Km*Vm
