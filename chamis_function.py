@@ -11,8 +11,7 @@ def chamis_function(x):
     am = 4.25e-6
     Gm = 170          # GPa
     Gf12 = 126        # GPa
-    E3 = 84           # GPa
-    V13 = 0.15
+    
 
     # Longitudinal modulus
     E1 = Kf*Ef11 + Km*Em
@@ -35,12 +34,16 @@ def chamis_function(x):
     Gl12 = Gm / (1 - (math.sqrt(Kf)*(1 - Gm/Gf12)))
     G12 = (1 - math.sqrt(Kf))*Gm + math.sqrt(Kf)*Gl12
     G23 = Gm / (1 - (math.sqrt(Kf)*(1 - Gm/Gf12)))
-    G13 = G23  # adjusted to be physical
 
     # Thermal expansion
     al11 = (Kf*af11*Ef11 + Km*am*Em)/E1
     al12 = (math.sqrt(Kf) + (1 - math.sqrt(Kf))*(1 + Kf*Vm*Ef11/E1))*am
 
+    E3=E2
+    V13=V23
+    G13=G23
+
     return E1, V12, E2, V23, G23, G12, E3, V13, G13, al11, al12
+
 
 
