@@ -13,4 +13,5 @@ def transformation():
     C_binder = []
     for i in range(len(T_tensor_binder)):
         C_binder.append(T_tensor_binder_inv[i] @ C @ T_eps_binder[i])
-    return  C_binder,C_weft,len(C_weft), len(C_binder)
+    return  C_binder,C_weft, length, len(C_weft), len(C_binder)
+
