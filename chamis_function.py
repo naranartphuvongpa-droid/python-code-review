@@ -11,13 +11,13 @@ def chamis_function(x):
     am = 4.25e-6
     Gm = 170          # GPa
     Gf12 = 126        # GPa
-    Gf23 = 126        # GPa
+    Gf23 = 0.6*Gf12        # GPa
 
     # Longitudinal modulus
     E1 = Kf*Ef11 + Km*Em
 
     # In-plane modulus
-    Ef22 = 84
+    Ef22 = 84 # Adopt from assumption
     El22 = Em/(1 - (math.sqrt(Kf)*(1 - Em/Ef22)))
     E2 = El22
 
@@ -26,9 +26,8 @@ def chamis_function(x):
 
     # Corrected V23 (limit between 0–1)
     Vf23 = 0.15
-    Vl12 = 0.1
-    V23_calc = Kf*Vf23 + Km*(2*Vm - Vl12*El22/E1)
-    V23 = max(0.0, min(V23_calc, 1.0))  # clamp to 0–1
+    V23_calc = Kf*Vf23 + Km*(2*Vm - (E2/E1)*V12)
+    V23 = max(0.0, min(V23_calc, 0.499))
 
     # Shear moduli
     Gl12 = Gm / (1 - (math.sqrt(Kf)*(1 - Gm/Gf12)))
