@@ -76,4 +76,7 @@ def check_symmetry(Vf_warp=0.5, Vf_weft=0.3, Vf_binder=0.2):
 
 if __name__ == "__main__":
     check_symmetry()
+if __name__ == "__main__":
+    check_symmetry()
+
 
