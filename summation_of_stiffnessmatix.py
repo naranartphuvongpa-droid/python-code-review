@@ -8,12 +8,12 @@ def sym_err(M):
     M = np.array(M, dtype=float)
     return float(np.max(np.abs(M - M.T)))
 
-def summation_of_stiffnessmatrix(Vf_warp, Vf_weft, Vf_binder, Vf_resin=1):
+def summation_of_stiffnessmatrix(Vf_warp, Vf_weft, Vf_binder, Vf_resin):
 
     """
     Calling for resin stiffness matrix
     """
-    C_resin = resin_stiffness(100000000,1000000000)
+    C_resin = resin_stiffness(0.1,0.1)
 
     """
     Weighted-average stiffness summation across binder segments.
@@ -49,7 +49,7 @@ def summation_of_stiffnessmatrix(Vf_warp, Vf_weft, Vf_binder, Vf_resin=1):
 
     return C_total_avg
 
-def check_symmetry(Vf_warp=0.5, Vf_weft=0.3, Vf_binder=0.2):
+def check_symmetry(Vf_warp=0.5, Vf_weft=0.2, Vf_binder=0.1, Vf_resin=0.2):
     """Print symmetry diagnostics for each stage."""
     C_warp = stiffness_matrix()
     C_binder, C_weft, length, _, _ = transformation()
@@ -74,7 +74,7 @@ def check_symmetry(Vf_warp=0.5, Vf_weft=0.3, Vf_binder=0.2):
     print("Cb[r,c] =", Cb[r,c], "Cb[c,r] =", Cb[c,r])
 
     # Also check after summation
-    C_total_avg = summation_of_stiffnessmatrix(Vf_warp, Vf_weft, Vf_binder)
+    C_total_avg = summation_of_stiffnessmatrix(Vf_warp, Vf_weft, Vf_binder, Vf_resin)
     print("sym_err C_total_avg:", sym_err(C_total_avg))
 
     # Helpful extra info
@@ -83,5 +83,6 @@ def check_symmetry(Vf_warp=0.5, Vf_weft=0.3, Vf_binder=0.2):
 
 if __name__ == "__main__":
     check_symmetry()
+
 
 
