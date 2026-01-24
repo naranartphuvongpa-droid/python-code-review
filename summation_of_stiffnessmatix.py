@@ -1,13 +1,20 @@
 import numpy as np
 from transformation import transformation
 from stiffness_matrix import stiffness_matrix
+from resin_stiffness import resin_matrix_stiffness_isotropic as resin_stiffness
 
 def sym_err(M):
     """Max absolute asymmetry: max(|M - M^T|). 0 = perfectly symmetric."""
     M = np.array(M, dtype=float)
     return float(np.max(np.abs(M - M.T)))
 
-def summation_of_stiffnessmatrix(Vf_warp, Vf_weft, Vf_binder):
+def summation_of_stiffnessmatrix(Vf_warp, Vf_weft, Vf_binder, Vf_resin=1):
+
+    """
+    Calling for resin stiffness matrix
+    """
+    C_resin = resin_stiffness(100000000,1000000000)
+
     """
     Weighted-average stiffness summation across binder segments.
     C_sum(i) = Vf_warp*C_warp + Vf_weft*C_weft + Vf_binder*C_binder[i]
@@ -19,7 +26,7 @@ def summation_of_stiffnessmatrix(Vf_warp, Vf_weft, Vf_binder):
     # Build C_total list
     C_total = []
     for i in range(len(C_binder)):
-        C_sum = Vf_warp * C_warp + Vf_weft * C_weft + Vf_binder * C_binder[i]
+        C_sum = Vf_warp * C_warp + Vf_weft * C_weft + Vf_resin * C_resin + Vf_binder * C_binder[i]
         C_total.append(C_sum)
 
     # Convert to arrays
@@ -74,8 +81,6 @@ def check_symmetry(Vf_warp=0.5, Vf_weft=0.3, Vf_binder=0.2):
     length = np.array(length, dtype=float).reshape(-1)
     print("\nBinder segment length min/max:", float(length.min()), float(length.max()))
 
-if __name__ == "__main__":
-    check_symmetry()
 if __name__ == "__main__":
     check_symmetry()
 
