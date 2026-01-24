@@ -1,6 +1,6 @@
 import numpy as np
 
-def matrix_stiffness_isotropic(E, nu):
+def resin_matrix_stiffness_isotropic(E, nu):
     lam = (nu * E) / ((1 + nu) * (1 - 2 * nu))
     mu  = E / (2 * (1 + nu))
 
@@ -12,3 +12,5 @@ def matrix_stiffness_isotropic(E, nu):
     C[4, 4] = mu
     C[5, 5] = mu
     return C
+
+
