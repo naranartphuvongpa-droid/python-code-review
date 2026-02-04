@@ -30,7 +30,7 @@ def translation_matrix_binder_parabolic(start, end, amplitude, num_nodes, window
         
         # Local slope
         slope, _ = np.polyfit(x[i0:i1], z[i0:i1], 1)
-        theta_i = math.atan(slope)
+        theta_i = math.atan(slope) # Don't forget to take data from TexGen
         
         # Segment length
         dx = x[i+1] - x[i]
@@ -68,6 +68,32 @@ def translation_matrix_binder_parabolic(start, end, amplitude, num_nodes, window
         T_tensor_binder_inv.append(np.linalg.inv(T_tensor_binder_i))
         T_eps_binder_inv_transpose.append(np.linalg.inv(T_eps_binder_i).T)
     return theta, length, T_tensor_binder, T_eps_binder, T_tensor_binder_inv, T_eps_binder_inv_transpose
+
+def binder_fixed_angle_theta(binder_angle_deg, num_nodes=20):
+    """
+    Return theta list and length list for a fixed-angle binder.
+
+    binder_angle_deg: angle measured from x-axis (x-z plane)
+    num_nodes: number of discretization points along binder path
+    """
+    th = math.radians(float(binder_angle_deg))
+    theta = [th for _ in range(num_nodes - 1)]
+    length = [1.0 for _ in range(num_nodes - 1)]  # constant weights
+    return theta, length
+
+import math
+
+def binder_fixed_angle_theta(binder_angle_deg, num_nodes=20):
+    """
+    Fixed binder inclination angle (measured from x-axis) for all segments.
+    Returns:
+      theta (list of radians), length (list of weights)
+    """
+    th = math.radians(float(binder_angle_deg))
+    theta = [th] * (num_nodes - 1)
+    length = [1.0] * (num_nodes - 1)
+    return theta, length
+
 
 
 
